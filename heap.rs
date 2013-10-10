@@ -8,7 +8,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-use libc::{abort, free, malloc};
+use core::libc::{abort, free, malloc};
 
 #[lang = "exchange_malloc"]
 unsafe fn exchange_malloc(size: uint) -> *mut u8 {
