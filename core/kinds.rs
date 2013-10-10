@@ -8,20 +8,8 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-#[allow(ctypes, cstack)];
+#[lang="send"]
+pub trait Send {}
 
-pub mod clone;
-pub mod intrinsics;
-pub mod kinds;
-pub mod ops;
-pub mod option;
-pub mod ptr;
-
-#[cfg(libc)]
-mod heap;
-#[cfg(libc)]
-pub mod libc;
-#[cfg(libc)]
-pub mod rc;
-#[cfg(libc)]
-pub mod vec;
+#[lang="freeze"]
+pub trait Freeze {}

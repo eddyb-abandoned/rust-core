@@ -9,6 +9,9 @@
 // except according to those terms.
 
 extern "rust-intrinsic" {
+    pub fn forget<T>(_: T) -> ();
+    pub fn transmute<T, U>(thing: T) -> U;
+
     pub fn size_of<T>() -> uint;
 
     pub fn init<T>() -> T;
