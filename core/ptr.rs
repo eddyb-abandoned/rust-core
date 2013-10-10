@@ -8,17 +8,16 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-#[allow(ctypes, cstack)];
+use core::intrinsics;
 
-pub mod intrinsics;
-pub mod option;
-pub mod ptr;
+#[inline]
+#[cfg(target_word_size = "32")]
+pub unsafe fn set_memory<T>(dst: *mut T, c: u8, count: uint) {
+    intrinsics::memset32(dst, c, count as u32);
+}
 
-#[cfg(libc)]
-mod heap;
-#[cfg(libc)]
-pub mod libc;
-#[cfg(libc)]
-pub mod rc;
-#[cfg(libc)]
-pub mod vec;
+#[inline]
+#[cfg(target_word_size = "64")]
+pub unsafe fn set_memory<T>(dst: *mut T, c: u8, count: uint) {
+    intrinsics::memset64(dst, c, count as u64);
+}

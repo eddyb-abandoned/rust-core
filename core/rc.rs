@@ -8,17 +8,13 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-#[allow(ctypes, cstack)];
+struct RcBox<T> {
+    value: T,
+    count: uint
+}
 
-pub mod intrinsics;
-pub mod option;
-pub mod ptr;
-
-#[cfg(libc)]
-mod heap;
-#[cfg(libc)]
-pub mod libc;
-#[cfg(libc)]
-pub mod rc;
-#[cfg(libc)]
-pub mod vec;
+#[unsafe_no_drop_flag]
+#[no_send]
+pub struct Rc<T> {
+    priv ptr: *mut RcBox<T>
+}

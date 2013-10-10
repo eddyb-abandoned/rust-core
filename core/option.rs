@@ -8,17 +8,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-#[allow(ctypes, cstack)];
-
-pub mod intrinsics;
-pub mod option;
-pub mod ptr;
-
-#[cfg(libc)]
-mod heap;
-#[cfg(libc)]
-pub mod libc;
-#[cfg(libc)]
-pub mod rc;
-#[cfg(libc)]
-pub mod vec;
+pub enum Option<T> {
+    Some(T),
+    None
+}

@@ -10,6 +10,7 @@
 
 use core::libc::{abort, free, malloc};
 
+#[inline]
 #[lang = "exchange_malloc"]
 unsafe fn exchange_malloc(size: uint) -> *mut u8 {
     let ptr = malloc(size);
@@ -19,6 +20,7 @@ unsafe fn exchange_malloc(size: uint) -> *mut u8 {
     ptr
 }
 
+#[inline]
 #[lang = "exchange_free"]
 unsafe fn exchange_free(ptr: *mut u8) {
     free(ptr)
