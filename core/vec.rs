@@ -13,7 +13,7 @@ use core::heap::{out_of_memory, realloc_raw};
 use core::kinds::{Freeze, Send};
 use core::ops::Drop;
 use core::libc::free;
-use core::raw::Slice;
+use core::slice::Slice;
 use core::ptr::read_ptr;
 
 pub struct Vec<T> {

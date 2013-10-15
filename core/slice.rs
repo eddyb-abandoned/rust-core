@@ -10,6 +10,11 @@
 
 use core::libc::abort;
 
+pub struct Slice<T> {
+    data: *T,
+    len: uint
+}
+
 #[lang="fail_bounds_check"]
 pub fn fail_bounds_check(_: *u8, _: uint, _: uint, _: uint) -> ! {
     abort()

@@ -16,7 +16,6 @@ pub mod kinds;
 pub mod ops;
 pub mod option;
 pub mod ptr;
-pub mod raw;
 
 #[cfg(libc)]
 pub mod heap;
