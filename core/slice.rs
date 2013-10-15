@@ -8,19 +8,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-mod detail {
-    extern {
-        pub fn abort() -> !;
-    }
-}
+use core::libc::abort;
 
-#[inline]
-pub fn abort() -> ! {
-    unsafe { detail::abort() }
-}
-
-extern {
-    pub fn malloc(size: uint) -> *mut u8;
-    pub fn realloc(ptr: *mut u8, size: uint) -> *mut u8;
-    pub fn free(ptr: *mut u8);
+#[lang="fail_bounds_check"]
+pub fn fail_bounds_check(_: *u8, _: uint, _: uint, _: uint) -> ! {
+    abort()
 }

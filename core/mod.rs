@@ -16,12 +16,15 @@ pub mod kinds;
 pub mod ops;
 pub mod option;
 pub mod ptr;
+pub mod raw;
 
 #[cfg(libc)]
-mod heap;
+pub mod heap;
 #[cfg(libc)]
 pub mod libc;
 #[cfg(libc)]
 pub mod rc;
+#[cfg(libc)]
+pub mod slice;
 #[cfg(libc)]
 pub mod vec;

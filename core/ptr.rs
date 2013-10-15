@@ -12,12 +12,43 @@ use core::intrinsics;
 
 #[inline]
 #[cfg(target_word_size = "32")]
+pub unsafe fn copy_memory<T>(dst: *mut T, src: *T, count: uint) {
+    intrinsics::memmove32(dst, src, count as u32)
+}
+
+#[inline]
+#[cfg(target_word_size = "64")]
+pub unsafe fn copy_memory<T>(dst: *mut T, src: *T, count: uint) {
+    intrinsics::memmove64(dst, src, count as u64)
+}
+
+#[inline]
+#[cfg(target_word_size = "32")]
+pub unsafe fn copy_nonoverlapping_memory<T>(dst: *mut T, src: *T, count: uint) {
+    intrinsics::memcpy32(dst, src, count as u32)
+}
+
+#[inline]
+#[cfg(target_word_size = "64")]
+pub unsafe fn copy_nonoverlapping_memory<T>(dst: *mut T, src: *T, count: uint) {
+    intrinsics::memcpy64(dst, src, count as u64)
+}
+
+#[inline]
+#[cfg(target_word_size = "32")]
 pub unsafe fn set_memory<T>(dst: *mut T, c: u8, count: uint) {
-    intrinsics::memset32(dst, c, count as u32);
+    intrinsics::memset32(dst, c, count as u32)
 }
 
 #[inline]
 #[cfg(target_word_size = "64")]
 pub unsafe fn set_memory<T>(dst: *mut T, c: u8, count: uint) {
-    intrinsics::memset64(dst, c, count as u64);
+    intrinsics::memset64(dst, c, count as u64)
+}
+
+#[inline]
+pub unsafe fn read_ptr<T>(src: *T) -> T {
+    let mut tmp: T = intrinsics::uninit();
+    copy_nonoverlapping_memory(&mut tmp, src, 1);
+    tmp
 }
