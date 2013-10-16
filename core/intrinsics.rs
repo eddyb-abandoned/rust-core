@@ -10,8 +10,14 @@
 
 mod detail {
     extern "rust-intrinsic" {
+        pub fn abort() -> !;
         pub fn size_of<T>() -> uint;
     }
+}
+
+#[inline]
+pub fn abort() -> ! {
+    unsafe { detail::abort() }
 }
 
 #[inline]

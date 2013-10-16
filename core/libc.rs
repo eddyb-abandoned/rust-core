@@ -8,17 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-mod detail {
-    extern {
-        pub fn abort() -> !;
-    }
-}
-
-#[inline]
-pub fn abort() -> ! {
-    unsafe { detail::abort() }
-}
-
 extern {
     pub fn malloc(size: uint) -> *mut u8;
     pub fn realloc(ptr: *mut u8, size: uint) -> *mut u8;
