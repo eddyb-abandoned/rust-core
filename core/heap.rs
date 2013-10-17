@@ -9,7 +9,7 @@
 // except according to those terms.
 
 use core::libc::{free, malloc, realloc};
-use core::intrinsics::abort;
+use core::fail::abort;
 
 #[inline]
 #[lang = "exchange_free"]

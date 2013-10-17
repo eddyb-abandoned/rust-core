@@ -10,40 +10,57 @@
 
 use core::intrinsics;
 
+mod detail {
+    extern "rust-intrinsic" {
+        pub fn memcpy32<T>(dst: *mut T, src: *T, count: u32);
+        pub fn memcpy64<T>(dst: *mut T, src: *T, count: u64);
+
+        pub fn memmove32<T>(dst: *mut T, src: *T, count: u32);
+        pub fn memmove64<T>(dst: *mut T, src: *T, count: u64);
+
+        pub fn memset32<T>(dst: *mut T, val: u8, count: u32);
+        pub fn memset64<T>(dst: *mut T, val: u8, count: u64);
+    }
+}
+
+extern "rust-intrinsic" {
+    pub fn offset<T>(dst: *T, offset: int) -> *T;
+}
+
 #[inline]
 #[cfg(target_word_size = "32")]
 pub unsafe fn copy_memory<T>(dst: *mut T, src: *T, count: uint) {
-    intrinsics::memmove32(dst, src, count as u32)
+    detail::memmove32(dst, src, count as u32)
 }
 
 #[inline]
 #[cfg(target_word_size = "64")]
 pub unsafe fn copy_memory<T>(dst: *mut T, src: *T, count: uint) {
-    intrinsics::memmove64(dst, src, count as u64)
+    detail::memmove64(dst, src, count as u64)
 }
 
 #[inline]
 #[cfg(target_word_size = "32")]
 pub unsafe fn copy_nonoverlapping_memory<T>(dst: *mut T, src: *T, count: uint) {
-    intrinsics::memcpy32(dst, src, count as u32)
+    detail::memcpy32(dst, src, count as u32)
 }
 
 #[inline]
 #[cfg(target_word_size = "64")]
 pub unsafe fn copy_nonoverlapping_memory<T>(dst: *mut T, src: *T, count: uint) {
-    intrinsics::memcpy64(dst, src, count as u64)
+    detail::memcpy64(dst, src, count as u64)
 }
 
 #[inline]
 #[cfg(target_word_size = "32")]
 pub unsafe fn set_memory<T>(dst: *mut T, c: u8, count: uint) {
-    intrinsics::memset32(dst, c, count as u32)
+    detail::memset32(dst, c, count as u32)
 }
 
 #[inline]
 #[cfg(target_word_size = "64")]
 pub unsafe fn set_memory<T>(dst: *mut T, c: u8, count: uint) {
-    intrinsics::memset64(dst, c, count as u64)
+    detail::memset64(dst, c, count as u64)
 }
 
 #[inline]

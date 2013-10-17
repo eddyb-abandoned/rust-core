@@ -8,13 +8,24 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-use core::intrinsics::abort;
+mod detail {
+    extern "rust-intrinsic" {
+        pub fn abort() -> !;
+    }
+}
 
+#[inline]
+pub fn abort() -> ! {
+    unsafe { detail::abort() }
+}
+
+#[inline]
 #[lang="fail_bounds_check"]
 pub fn fail_bounds_check(_: *u8, _: uint, _: uint, _: uint) -> ! {
     abort()
 }
 
+#[inline]
 #[lang="fail_"]
 pub fn fail_(_: *u8, _: *u8, _: uint) -> ! {
     abort()

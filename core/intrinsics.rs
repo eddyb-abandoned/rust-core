@@ -10,14 +10,8 @@
 
 mod detail {
     extern "rust-intrinsic" {
-        pub fn abort() -> !;
         pub fn size_of<T>() -> uint;
     }
-}
-
-#[inline]
-pub fn abort() -> ! {
-    unsafe { detail::abort() }
 }
 
 #[inline]
@@ -31,17 +25,6 @@ extern "rust-intrinsic" {
 
     pub fn init<T>() -> T;
     pub fn uninit<T>() -> T;
-
-    pub fn offset<T>(dst: *T, offset: int) -> *T;
-
-    pub fn memcpy32<T>(dst: *mut T, src: *T, count: u32);
-    pub fn memcpy64<T>(dst: *mut T, src: *T, count: u64);
-
-    pub fn memmove32<T>(dst: *mut T, src: *T, count: u32);
-    pub fn memmove64<T>(dst: *mut T, src: *T, count: u64);
-
-    pub fn memset32<T>(dst: *mut T, val: u8, count: u32);
-    pub fn memset64<T>(dst: *mut T, val: u8, count: u64);
 
     pub fn move_val_init<T>(dst: &mut T, src: T);
 
