@@ -45,6 +45,70 @@ extern "rust-intrinsic" {
 
     pub fn move_val_init<T>(dst: &mut T, src: T);
 
+    pub fn sqrtf32(x: f32) -> f32;
+    pub fn sqrtf64(x: f64) -> f64;
+
+    pub fn powif32(a: f32, x: i32) -> f32;
+    pub fn powif64(a: f64, x: i32) -> f64;
+
+    pub fn sinf32(x: f32) -> f32;
+    pub fn sinf64(x: f64) -> f64;
+
+    pub fn cosf32(x: f32) -> f32;
+    pub fn cosf64(x: f64) -> f64;
+
+    pub fn powf32(a: f32, x: f32) -> f32;
+    pub fn powf64(a: f64, x: f64) -> f64;
+
+    pub fn expf32(x: f32) -> f32;
+    pub fn expf64(x: f64) -> f64;
+
+    pub fn exp2f32(x: f32) -> f32;
+    pub fn exp2f64(x: f64) -> f64;
+
+    pub fn logf32(x: f32) -> f32;
+    pub fn logf64(x: f64) -> f64;
+
+    pub fn log10f32(x: f32) -> f32;
+    pub fn log10f64(x: f64) -> f64;
+
+    pub fn log2f32(x: f32) -> f32;
+    pub fn log2f64(x: f64) -> f64;
+
+    pub fn fmaf32(a: f32, b: f32, c: f32) -> f32;
+    pub fn fmaf64(a: f64, b: f64, c: f64) -> f64;
+
+    pub fn fabsf32(x: f32) -> f32;
+    pub fn fabsf64(x: f64) -> f64;
+
+    pub fn floorf32(x: f32) -> f32;
+    pub fn floorf64(x: f64) -> f64;
+
+    pub fn ceilf32(x: f32) -> f32;
+    pub fn ceilf64(x: f64) -> f64;
+
+    pub fn truncf32(x: f32) -> f32;
+    pub fn truncf64(x: f64) -> f64;
+
+    pub fn ctpop8(x: i8) -> i8;
+    pub fn ctpop16(x: i16) -> i16;
+    pub fn ctpop32(x: i32) -> i32;
+    pub fn ctpop64(x: i64) -> i64;
+
+    pub fn ctlz8(x: i8) -> i8;
+    pub fn ctlz16(x: i16) -> i16;
+    pub fn ctlz32(x: i32) -> i32;
+    pub fn ctlz64(x: i64) -> i64;
+
+    pub fn cttz8(x: i8) -> i8;
+    pub fn cttz16(x: i16) -> i16;
+    pub fn cttz32(x: i32) -> i32;
+    pub fn cttz64(x: i64) -> i64;
+
+    pub fn bswap16(x: i16) -> i16;
+    pub fn bswap32(x: i32) -> i32;
+    pub fn bswap64(x: i64) -> i64;
+
     pub fn i8_add_with_overflow(x: i8, y: i8) -> (i8, bool);
     pub fn i16_add_with_overflow(x: i16, y: i16) -> (i16, bool);
     pub fn i32_add_with_overflow(x: i32, y: i32) -> (i32, bool);
