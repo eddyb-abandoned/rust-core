@@ -11,6 +11,7 @@
 #[allow(ctypes, cstack)];
 
 pub mod clone;
+pub mod fail;
 pub mod intrinsics;
 pub mod kinds;
 pub mod ops;
