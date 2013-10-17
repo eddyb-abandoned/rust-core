@@ -72,13 +72,13 @@ impl<T: Send + Freeze> Vec<T> {
 
     #[inline]
     pub fn as_slice<'r>(&'r self) -> &'r [T] {
-        let slice = Slice { data: self.ptr as *T, len: self.len * size_of::<T>()};
+        let slice = Slice { data: self.ptr as *T, len: self.len };
         unsafe { transmute(slice) }
     }
 
     #[inline]
     pub fn as_mut_slice<'r>(&'r mut self) -> &'r mut [T] {
-        let slice = Slice { data: self.ptr as *T, len: self.len * size_of::<T>()};
+        let slice = Slice { data: self.ptr as *T, len: self.len };
         unsafe { transmute(slice) }
     }
 }
