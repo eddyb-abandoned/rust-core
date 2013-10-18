@@ -32,6 +32,17 @@ impl<'self> Clone for &'self str {
     fn clone(&self) -> &'self str { *self }
 }
 
+impl<T> Clone for *T {
+    #[inline]
+    fn clone(&self) -> *T { *self }
+}
+
+
+impl<T> Clone for *mut T {
+    #[inline]
+    fn clone(&self) -> *mut T { *self }
+}
+
 impl Clone for int {
     #[inline]
     fn clone(&self) -> int { *self }
