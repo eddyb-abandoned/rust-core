@@ -9,6 +9,7 @@
 // except according to those terms.
 
 use core::intrinsics;
+use core::ops::{Eq, Ord};
 
 mod detail {
     extern "rust-intrinsic" {
@@ -68,4 +69,59 @@ pub unsafe fn read_ptr<T>(src: *T) -> T {
     let mut tmp: T = intrinsics::uninit();
     copy_nonoverlapping_memory(&mut tmp, src, 1);
     tmp
+}
+
+#[inline]
+pub unsafe fn swap_ptr<T>(x: *mut T, y: *mut T) {
+    let mut tmp: T = intrinsics::uninit();
+
+    copy_nonoverlapping_memory(&mut tmp, x as *T, 1);
+    copy_memory(x, y as *T, 1); // `x` and `y` may overlap
+    copy_nonoverlapping_memory(y, &tmp, 1);
+
+    intrinsics::forget(tmp);
+}
+
+impl<T> Eq for *T {
+    #[inline]
+    fn eq(&self, other: &*T) -> bool { *self == *other }
+
+    #[inline]
+    fn ne(&self, other: &*T) -> bool { *self != *other }
+}
+
+impl<T> Eq for *mut T {
+    #[inline]
+    fn eq(&self, other: &*mut T) -> bool { *self == *other }
+
+    #[inline]
+    fn ne(&self, other: &*mut T) -> bool { *self != *other }
+}
+
+impl<T> Ord for *T {
+    #[inline]
+    fn lt(&self, other: &*T) -> bool { *self < *other }
+
+    #[inline]
+    fn le(&self, other: &*T) -> bool { *self <= *other }
+
+    #[inline]
+    fn gt(&self, other: &*T) -> bool { *self > *other }
+
+    #[inline]
+    fn ge(&self, other: &*T) -> bool { *self >= *other }
+}
+
+impl<T> Ord for *mut T {
+    #[inline]
+    fn lt(&self, other: &*mut T) -> bool { *self < *other }
+
+    #[inline]
+    fn le(&self, other: &*mut T) -> bool { *self <= *other }
+
+    #[inline]
+    fn gt(&self, other: &*mut T) -> bool { *self > *other }
+
+    #[inline]
+    fn ge(&self, other: &*mut T) -> bool { *self >= *other }
 }

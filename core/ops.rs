@@ -77,3 +77,27 @@ pub trait Shr<RHS, Result> {
 pub trait Index<Index, Result> {
     fn index(&self, index: &Index) -> Result;
 }
+
+#[lang="eq"]
+pub trait Eq {
+    #[inline]
+    fn eq(&self, other: &Self) -> bool { !self.ne(other) }
+
+    #[inline]
+    fn ne(&self, other: &Self) -> bool { !self.eq(other) }
+}
+
+#[lang="ord"]
+pub trait Ord {
+    #[inline]
+    fn lt(&self, other: &Self) -> bool { other.gt(self) }
+
+    #[inline]
+    fn le(&self, other: &Self) -> bool { !other.lt(self) }
+
+    #[inline]
+    fn gt(&self, other: &Self) -> bool { other.lt(self) }
+
+    #[inline]
+    fn ge(&self, other: &Self) -> bool { !self.lt(other) }
+}
