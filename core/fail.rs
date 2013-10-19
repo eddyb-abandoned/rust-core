@@ -30,3 +30,8 @@ pub fn fail_bounds_check(_: *u8, _: uint, _: uint, _: uint) -> ! {
 pub fn fail_(_: *u8, _: *u8, _: uint) -> ! {
     abort()
 }
+
+#[inline]
+pub fn fail_borrowed() -> ! {
+    abort()
+}
