@@ -10,6 +10,7 @@
 
 #[allow(ctypes, cstack)];
 
+pub mod atomics;
 pub mod clone;
 pub mod fail;
 pub mod intrinsics;
