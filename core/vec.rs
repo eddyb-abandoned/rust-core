@@ -9,10 +9,9 @@
 // except according to those terms.
 
 use core::intrinsics::{move_val_init, size_of, transmute};
-use core::heap::{out_of_memory, realloc_raw};
+use core::heap::{free_raw, out_of_memory, realloc_raw};
 use core::kinds::{Freeze, Send};
 use core::ops::Drop;
-use core::libc::free;
 use core::slice::Slice;
 use core::ptr::{offset, read_ptr};
 
@@ -42,7 +41,7 @@ impl<T: Send + Freeze> Vec<T> {
     pub fn shrink_to_fit(&mut self) {
         unsafe {
             if self.len == 0 {
-                free(self.ptr as *mut u8);
+                free_raw(self.ptr as *mut u8);
                 self.cap = 0;
                 self.ptr = 0 as *mut T;
             } else {
@@ -95,7 +94,7 @@ impl<T: Send + Freeze> Drop for Vec<T> {
                 read_ptr(&xs[i]);
                 i += 1;
             }
-            free(self.ptr as *mut u8)
+            free_raw(self.ptr as *mut u8)
         }
     }
 }

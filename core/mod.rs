@@ -21,9 +21,11 @@ pub mod ptr;
 pub mod rc;
 pub mod slice;
 
+#[cfg(has_heap_impl)]
 #[cfg(libc)]
 pub mod heap;
 #[cfg(libc)]
 pub mod libc;
+#[cfg(has_heap_impl)]
 #[cfg(libc)]
 pub mod vec;

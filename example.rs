@@ -1,3 +1,5 @@
+// Compile with --cfg libc
+
 #[no_std];
 
 use core::vec::Vec;
