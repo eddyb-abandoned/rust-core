@@ -8,57 +8,38 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-use core::intrinsics;
+use core::intrinsics::transmute;
 
 mod detail {
     extern "rust-intrinsic" {
-        /// Atomic compare and exchange, sequentially consistent.
         pub fn atomic_cxchg(dst: &mut int, old: int, src: int) -> int;
-        /// Atomic compare and exchange, acquire ordering.
         pub fn atomic_cxchg_acq(dst: &mut int, old: int, src: int) -> int;
-        /// Atomic compare and exchange, release ordering.
         pub fn atomic_cxchg_rel(dst: &mut int, old: int, src: int) -> int;
-
         pub fn atomic_cxchg_acqrel(dst: &mut int, old: int, src: int) -> int;
         pub fn atomic_cxchg_relaxed(dst: &mut int, old: int, src: int) -> int;
 
-        /// Atomic load, sequentially consistent.
         pub fn atomic_load(src: &int) -> int;
-        /// Atomic load, acquire ordering.
         pub fn atomic_load_acq(src: &int) -> int;
-
         pub fn atomic_load_relaxed(src: &int) -> int;
 
-        /// Atomic store, sequentially consistent.
         pub fn atomic_store(dst: &mut int, val: int);
-        /// Atomic store, release ordering.
         pub fn atomic_store_rel(dst: &mut int, val: int);
-
         pub fn atomic_store_relaxed(dst: &mut int, val: int);
 
-        /// Atomic exchange, sequentially consistent.
         pub fn atomic_xchg(dst: &mut int, src: int) -> int;
-        /// Atomic exchange, acquire ordering.
         pub fn atomic_xchg_acq(dst: &mut int, src: int) -> int;
-        /// Atomic exchange, release ordering.
         pub fn atomic_xchg_rel(dst: &mut int, src: int) -> int;
         pub fn atomic_xchg_acqrel(dst: &mut int, src: int) -> int;
         pub fn atomic_xchg_relaxed(dst: &mut int, src: int) -> int;
 
-        /// Atomic addition, sequentially consistent.
         pub fn atomic_xadd(dst: &mut int, src: int) -> int;
-        /// Atomic addition, acquire ordering.
         pub fn atomic_xadd_acq(dst: &mut int, src: int) -> int;
-        /// Atomic addition, release ordering.
         pub fn atomic_xadd_rel(dst: &mut int, src: int) -> int;
         pub fn atomic_xadd_acqrel(dst: &mut int, src: int) -> int;
         pub fn atomic_xadd_relaxed(dst: &mut int, src: int) -> int;
 
-        /// Atomic subtraction, sequentially consistent.
         pub fn atomic_xsub(dst: &mut int, src: int) -> int;
-        /// Atomic subtraction, acquire ordering.
         pub fn atomic_xsub_acq(dst: &mut int, src: int) -> int;
-        /// Atomic subtraction, release ordering.
         pub fn atomic_xsub_rel(dst: &mut int, src: int) -> int;
         pub fn atomic_xsub_acqrel(dst: &mut int, src: int) -> int;
         pub fn atomic_xsub_relaxed(dst: &mut int, src: int) -> int;
@@ -119,11 +100,80 @@ mod detail {
 }
 
 #[inline]
-pub unsafe fn atomic_compare_and_swap<T>(dst: &mut T, old: T, new: T) -> T {
-    let dst = intrinsics::transmute(dst);
-    let old = intrinsics::transmute(old);
-    let new = intrinsics::transmute(new);
+pub unsafe fn compare_and_swap<T>(dst: &mut T, old: T, new: T) -> T {
+    let dst = transmute(dst);
+    let old = transmute(old);
+    let new = transmute(new);
 
-    intrinsics::transmute(detail::atomic_cxchg(dst, old, new))
+    transmute(detail::atomic_cxchg(dst, old, new))
 }
 
+#[inline]
+pub unsafe fn load<T>(dst: &T) -> T {
+    transmute(detail::atomic_load(transmute(dst)))
+}
+
+#[inline]
+pub unsafe fn store<T>(dst: &mut T, val: T) {
+    detail::atomic_store(transmute(dst), transmute(val))
+}
+
+#[inline]
+pub unsafe fn swap<T>(dst: &mut T, val: T) -> T {
+    transmute(detail::atomic_xchg(transmute(dst), transmute(val)))
+}
+
+#[inline]
+pub unsafe fn add<T>(dst: &mut T, val: T) -> T {
+    transmute(detail::atomic_xadd(transmute(dst), transmute(val)))
+}
+
+#[inline]
+pub unsafe fn sub<T>(dst: &mut T, val: T) -> T {
+    transmute(detail::atomic_xsub(transmute(dst), transmute(val)))
+}
+
+#[inline]
+pub unsafe fn and<T>(dst: &mut T, val: T) -> T {
+    transmute(detail::atomic_and(transmute(dst), transmute(val)))
+}
+
+#[inline]
+pub unsafe fn nand<T>(dst: &mut T, val: T) -> T {
+    transmute(detail::atomic_nand(transmute(dst), transmute(val)))
+}
+
+#[inline]
+pub unsafe fn or<T>(dst: &mut T, val: T) -> T {
+    transmute(detail::atomic_or(transmute(dst), transmute(val)))
+}
+
+#[inline]
+pub unsafe fn xor<T>(dst: &mut T, val: T) -> T {
+    transmute(detail::atomic_xor(transmute(dst), transmute(val)))
+}
+
+#[inline]
+pub unsafe fn min<T>(dst: &mut T, val: T) -> T {
+    transmute(detail::atomic_min(transmute(dst), transmute(val)))
+}
+
+#[inline]
+pub unsafe fn max<T>(dst: &mut T, val: T) -> T {
+    transmute(detail::atomic_max(transmute(dst), transmute(val)))
+}
+
+#[inline]
+pub unsafe fn umin<T>(dst: &mut T, val: T) -> T {
+    transmute(detail::atomic_min(transmute(dst), transmute(val)))
+}
+
+#[inline]
+pub unsafe fn umax<T>(dst: &mut T, val: T) -> T {
+    transmute(detail::atomic_max(transmute(dst), transmute(val)))
+}
+
+#[inline]
+pub unsafe fn fence() {
+    detail::atomic_fence()
+}
